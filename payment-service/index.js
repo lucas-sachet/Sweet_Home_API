@@ -3,6 +3,8 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const app = express()
 const router = require('./api/router')
+const errorHandler = require('./api/middleware/errorHandler');
+const morgan = require('morgan');
 require('dotenv').config();
 
 
@@ -11,6 +13,7 @@ app.use(cors())
 app.use(express.json())
 app.use(bodyParser.urlencoded({extended: true}))
 
+app.use(morgan('dev'));
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -27,9 +30,10 @@ app.use((req, res, next) => {
 
 app.use(router);
 
+app.use(errorHandler);
 
 //Iniciando o Servidor (Aplicação):
 //==============================================================
 module.exports = app.listen(3003, () => {
-  console.log('Iniciando User Service na porta: 8001');
+  console.log('Iniciando Payment Service na porta: 8001');
 })

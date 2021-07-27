@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "concurrently \"node user-service/index.js\" \"node report-service/index.js\" \"node realty-service/index.js\" \"node payment-service/index.js\" ",
+        "start": "concurrently \"nodemon user-service/index.js\" \"nodemon report-service/index.js\" \"nodemon realty-service/index.js\" \"nodemon payment-service/index.js\" ",
         "dev": "nodemon index.js"
     },
     "author": "",

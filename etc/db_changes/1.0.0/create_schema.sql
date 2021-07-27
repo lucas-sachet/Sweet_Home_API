@@ -23,11 +23,13 @@ CREATE TABLE `realtyType` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `user` (
-  `id` int NOT NULL,  
+  `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `userTypeId` int DEFAULT NULL, 
+  `password` varchar(150) NOT NULL,
   `name` varchar(150) NOT NULL,
   `cpf` varchar(20) DEFAULT NULL,  
   `birth` datetime NOT NULL,
-  CONSTRAINT `userTypeId` FOREIGN KEY (id) REFERENCES userType(id),
+  CONSTRAINT `userTypeId` FOREIGN KEY (userTypeId) REFERENCES userType(id),
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -46,9 +48,11 @@ CREATE TABLE `realty` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `report` (
-  `id` int PRIMARY KEY NOT NULL,  
-  CONSTRAINT `userId` FOREIGN KEY (id) REFERENCES user(id),
-  CONSTRAINT `realtyId` FOREIGN KEY (id) REFERENCES realty(id),
+  `id` int PRIMARY KEY NOT NULL,
+  `userId` int DEFAULT NULL,
+  `realtyId` int DEFAULT NULL,
+  CONSTRAINT `userId` FOREIGN KEY (userId) REFERENCES user(id),
+  CONSTRAINT `realtyId` FOREIGN KEY (realtyId) REFERENCES realty(id),
   `subject` varchar(40) NOT NULL,
   `message` varchar(200) DEFAULT NULL,  
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -70,10 +74,13 @@ CREATE TABLE `bills` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `userStatus` (
-  `id` int PRIMARY KEY NOT NULL,  
-  CONSTRAINT `userStatusBillId` FOREIGN KEY (id) REFERENCES bills(id),
-  CONSTRAINT `userStatusUserId` FOREIGN KEY (id) REFERENCES user(id),
-  CONSTRAINT `userStatusRealtyId` FOREIGN KEY (id) REFERENCES realty(id),
+  `id` int PRIMARY KEY NOT NULL, 
+  `userStatusBillId` int DEFAULT NULL,
+  `userStatusUserId` int DEFAULT NULL,
+  `userStatusRealtyId` int DEFAULT NULL,
+  CONSTRAINT `userStatusBillId` FOREIGN KEY (userStatusBillId) REFERENCES bills(id),
+  CONSTRAINT `userStatusUserId` FOREIGN KEY (userStatusUserId) REFERENCES user(id),
+  CONSTRAINT `userStatusRealtyId` FOREIGN KEY (userStatusRealtyId) REFERENCES realty(id),
   `isPaid` boolean NOT NULL DEFAULT false,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -81,8 +88,10 @@ CREATE TABLE `userStatus` (
 
 CREATE TABLE `realtyStatus` (
   `id` int PRIMARY KEY NOT NULL,  
-  CONSTRAINT `realtyStatusUserId` FOREIGN KEY (id) REFERENCES user(id),
-  CONSTRAINT `realtyStatusId` FOREIGN KEY (id) REFERENCES realty(id),
+  `realtyStatusUserId` int DEFAULT NULL,
+  `realtyStatusId` int DEFAULT NULL,
+  CONSTRAINT `realtyStatusUserId` FOREIGN KEY (realtyStatusUserId) REFERENCES user(id),
+  CONSTRAINT `realtyStatusId` FOREIGN KEY (realtyStatusId) REFERENCES realty(id),
   `isRented` boolean DEFAULT false, 
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
