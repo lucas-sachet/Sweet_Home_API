@@ -13,7 +13,7 @@ exports.execSql = (sqlQry) => {
       
       connection.query(sqlQry, function (error, results, fields) {
         if (error)
-          reject(error);
+          return reject(error);
         else
           resolve(results);
         connection.end();

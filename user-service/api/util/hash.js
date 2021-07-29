@@ -5,6 +5,6 @@ exports.hashPassword = (password) => {
     return bcrypt.hash(password, saltRounds);
 }
 
-exports.comparePassword = (data) => {
-    return bcrypt.compare(data, data.hash);
+exports.comparePassword = (data, hash) => {
+    return bcrypt.compare(data, hash);
 }
